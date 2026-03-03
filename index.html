@@ -74,14 +74,27 @@
               name="name"
               placeholder="Nome"
               type="text"
+              required
+              minlength="2"
+              maxlength="40"
             />
+            <span id="input-name-error" class="popup__error-message"></span>
             <input
               class="popup__input popup__input_type_description"
               name="description"
               placeholder="Sobre mim"
               type="text"
+              required
+              minlength="2"
+              maxlength="200"
             />
-            <button class="button popup__button" type="submit">Salvar</button>
+            <span
+              id="input-description-error"
+              class="popup__error-message"
+            ></span>
+            <button class="button popup__button" type="submit" disabled>
+              Salvar
+            </button>
           </form>
         </div>
       </div>
@@ -100,15 +113,26 @@
               placeholder="Título"
               required
               type="text"
+              required
+              minlength="2"
+              maxlength="30"
             />
+            <span
+              id="input-place-name-error"
+              class="popup__error-message"
+            ></span>
             <input
               class="popup__input popup__input_type_url"
               name="link"
               placeholder="Link de Imagem"
               required
               type="url"
+              required
             />
-            <button class="button popup__button" type="submit">Criar</button>
+            <span id="input-link-error" class="popup__error-message"></span>
+            <button class="button popup__button" type="submit" disabled>
+              Criar
+            </button>
           </form>
         </div>
       </div>

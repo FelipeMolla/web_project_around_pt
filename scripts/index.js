@@ -9,8 +9,7 @@ const profileEditDescriptionInput = document.querySelector(
   ".popup__input_type_description",
 );
 const formEditProfile = document.querySelector("#edit-profile-form");
-const profileEditSubmitBtn =
-  formEditProfile.querySelector("#edit-profile-form");
+const profileEditSubmitBtn = formEditProfile.querySelector(".popup__button");
 const cardTemplate = document.querySelector("#cards-template");
 const cardsContainer = document.querySelector(".cards__list");
 const card = cardsContainer.querySelector(".card");
@@ -145,4 +144,57 @@ initialCards.forEach(function (card) {
   return console.log(
     `O nome do cartão é: ${card.name}, e seu link é ${card.link} e foi inserido no ${cardsContainer}`,
   );
+});
+
+function hasInvalidInput(inputs) {
+  return Array.from(inputs).some((input) => !input.validity.valid);
+}
+function toggleButtonState(inputs, button) {
+  if (hasInvalidInput(inputs)) {
+    button.disabled = true;
+  } else {
+    button.disabled = false;
+  }
+}
+formEditProfile.addEventListener("input", (input) => {
+  const errorElement = formEditProfile.querySelector(
+    `#input-${input.target.name}-error`,
+  );
+  if (!input.target.validity.valid) {
+    input.target.classList.add("popup__input-error");
+    errorElement.textContent = input.target.validationMessage;
+    toggleButtonState(
+      formEditProfile.querySelectorAll(".popup__input"),
+      profileEditSubmitBtn,
+    );
+    console.log(input.target.name);
+  } else {
+    input.target.classList.remove("popup__input-error");
+    toggleButtonState(
+      formEditProfile.querySelectorAll(".popup__input"),
+      profileEditSubmitBtn,
+    );
+    errorElement.textContent = "";
+  }
+});
+newCardForm.addEventListener("input", (input) => {
+  const errorElement = newCardForm.querySelector(
+    `#input-${input.target.name}-error`,
+  );
+  if (!input.target.validity.valid) {
+    input.target.classList.add("popup__input-error");
+    errorElement.textContent = input.target.validationMessage;
+    toggleButtonState(
+      newCardForm.querySelectorAll(".popup__input"),
+      newCardSubmitBtn,
+    );
+    console.log(input.target.name);
+  } else {
+    input.target.classList.remove("popup__input-error");
+    toggleButtonState(
+      newCardForm.querySelectorAll(".popup__input"),
+      newCardSubmitBtn,
+    );
+    errorElement.textContent = "";
+  }
 });
