@@ -198,3 +198,18 @@ newCardForm.addEventListener("input", (input) => {
     errorElement.textContent = "";
   }
 });
+document.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("popup_is-opened")) {
+    closeModal(evt.target);
+  }
+});
+
+document.addEventListener("keydown", (evt) => {
+  console.log(evt.key);
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".popup_is-opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+});
