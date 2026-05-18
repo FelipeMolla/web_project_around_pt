@@ -1,4 +1,5 @@
 
+import { openModal, closeModal } from "./utils.js";
 export class Card {
     constructor(data, CardSelector){
         this._name = data.name;
@@ -49,6 +50,9 @@ this._likeCardBtn.addEventListener("click", (like) => {
     this._contentPopupCaption.textContent = this._name;
     this._contentPopupImage.alt = this._name;
     openModal(this._popupImage);
+  });
+  this._popupImageCloseBtn.addEventListener("click", () => {
+    closeModal(this._popupImage);
   });
     }
     generateCard(){

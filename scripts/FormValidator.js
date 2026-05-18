@@ -33,10 +33,20 @@ _hasInvalidInput() {
 this._inputs.forEach((input) => {
     input.addEventListener("input", ()=>{
         this._verifyInputValidity(input);})
-        console.log("_setEventListener foi chamado");
-});
-
-    }
+})};
+     _hideInputErrors(){
+      
+  this._inputs.forEach((input) => {
+    const errorElement = this._formElement.querySelector(
+      `#input-${input.name}-error`,
+    );
+    input.classList.remove(this._config.inputErrorClass);
+    errorElement.textContent = "";
+  })};
+     resetValidation(){
+  this._hideInputErrors();
+     };
     enableValidation(){
       this._setEventListeners();
-    }}
+     }
+    }

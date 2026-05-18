@@ -56,13 +56,14 @@ let initialCards = [
 const validationConfig = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
-  inactiveButtonClass: ".popup__button_disabled",
-  inputErrorClass: ".popup__input-error",
-  errorClass: ".popup__error_visible",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input-error",
+  errorClass: "popup__error_visible",
 
 }
-const formEditProfileValidator  = new FormValidator(validationConfig, formEditProfile);
-formEditProfileValidator.enableValidation();
+  const formEditProfileValidator  = new FormValidator(validationConfig, formEditProfile);
+  formEditProfileValidator.enableValidation();
+
 const newCardFormValidator = new FormValidator(validationConfig, newCardForm);
 newCardFormValidator.enableValidation();
 
@@ -70,9 +71,6 @@ initialCards.forEach((cardData) => {
   const card = new Card(cardData, "#cards-template");
   const cardElement = card.generateCard();
   cardsContainer.prepend(cardElement);
-  return console.log(
-    `O nome do cartão é: ${cardData.name}, e seu link é ${cardData.link} e foi inserido no ${cardsContainer}`,
-  );
 });
 newCardSubmitBtn.addEventListener("click", (evt) => {
   handleCardFormSubmit(evt, newCardNameInput, newCardLinkInput, newCardModal, cardsContainer);
@@ -103,7 +101,7 @@ newCardCloseBtn.addEventListener("click", () => {
   closeModal(newCardModal);
 });
 profileEditBtn.addEventListener("click", () => {
-  handleOpenEditModal(profileEditModal, profileName, profileDescription, profileEditNameInput, profileEditDescriptionInput);
+  handleOpenEditModal(profileEditModal, profileName, profileDescription, profileEditNameInput, profileEditDescriptionInput, formEditProfileValidator);
 });
 profileCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);

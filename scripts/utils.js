@@ -10,8 +10,9 @@ const fillProfileForm = (profileName, profileDescription, nameInput, description
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 };
-const handleOpenEditModal = (modal,profileName, profileDescription, nameInput, descriptionInput) => {
+const handleOpenEditModal = (modal,profileName, profileDescription, nameInput, descriptionInput, profileFormValidator) => {
   fillProfileForm(profileName, profileDescription, nameInput, descriptionInput);
+  profileFormValidator.resetValidation();
   openModal(modal);
 };
 const handleProfileFormSubmit = (evt, profileName, profileDescription, nameInput, descriptionInput,  modal) => {
@@ -22,8 +23,8 @@ const handleProfileFormSubmit = (evt, profileName, profileDescription, nameInput
 };
 const handleCardFormSubmit = (evt, newCardNameInput, newCardLinkInput, modal, cardsContainer) => {
   evt.preventDefault();
-  let cardName = newCardNameInput.value;
-  let cardLink = newCardLinkInput.value;
+  const cardName = newCardNameInput.value;
+  const cardLink = newCardLinkInput.value;
   
   const card = new Card({ name: cardName, link: cardLink }, "#cards-template");
   cardsContainer.prepend(card.generateCard());
