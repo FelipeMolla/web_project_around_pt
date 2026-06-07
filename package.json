@@ -1,0 +1,20 @@
+{
+  "name": "web_project_around_pt",
+  "version": "1.0.0",
+  "description": "Este projeto traz interação e funcionalidades para a página, com o uso de JavaScript.\r Com manipulação de eventos DOM, começando pelo pop-up de edição de perfil e agora estendendo para edição de perfil adicionando e removendo fotos, validação de formulários manipulação de eventos com \"click\" e \"keydown\".",
+  "homepage": "https://github.com/FelipeMolla/web_project_around_pt#readme",
+  "bugs": {
+    "url": "https://github.com/FelipeMolla/web_project_around_pt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelipeMolla/web_project_around_pt.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

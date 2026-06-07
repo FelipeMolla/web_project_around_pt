@@ -1,10 +1,10 @@
 
-import { openModal, closeModal } from "./utils.js";
 export class Card {
-    constructor(data, CardSelector){
+    constructor(data, CardSelector, handleCardClick){
         this._name = data.name;
         this._link = data.link;
         this._CardSelector = CardSelector;
+        this._handleCardClick = handleCardClick;
     }
     _getTemplate(){
 const cardElement = document.querySelector(this._CardSelector).content.cloneNode(true);
@@ -46,13 +46,7 @@ this._likeCardBtn.addEventListener("click", (like) => {
   this._contentPopupCaption = this._popupImage.querySelector(".popup__caption");
 
   this._imageCard.addEventListener("click", () => {
-    this._contentPopupImage.src = this._link;
-    this._contentPopupCaption.textContent = this._name;
-    this._contentPopupImage.alt = this._name;
-    openModal(this._popupImage);
-  });
-  this._popupImageCloseBtn.addEventListener("click", () => {
-    closeModal(this._popupImage);
+this._handleCardClick(this._link, this._name);
   });
     }
     generateCard(){
