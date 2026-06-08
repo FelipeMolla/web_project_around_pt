@@ -4,7 +4,7 @@ export class Section {
         this._renderer = renderer;
         this._elementSelector = document.querySelector(elementSelector);
     };
-    _renderItems(){
+    renderItems(){
 this._items.forEach((item)=>{
     this._renderer(item);
 })

@@ -7,8 +7,8 @@ export class Card {
         this._handleCardClick = handleCardClick;
     }
     _getTemplate(){
-const cardElement = document.querySelector(this._CardSelector).content.cloneNode(true);
-return cardElement;
+      const cardElement = document.querySelector(this._CardSelector).content.cloneNode(true);
+      return cardElement;
     }
     _fillCardData(){
         
