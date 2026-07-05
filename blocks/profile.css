@@ -37,13 +37,36 @@
   max-width: 373px;
 }
 
+.profile__image-container {
+  margin-right: 29px;
+  position: relative;
+}
 .profile__image {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   background-position: center;
-  margin-right: 29px;
+}
+
+.profile__image-edit {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-position: center;
+  position: absolute;
+  opacity:0;
+  transition: 0.2s ease;
+}
+
+.profile__image-container:hover {
+  cursor: pointer;
+}
+.profile__image-container:hover .profile__image{
+  opacity: 0.4;
+}
+.profile__image-container:hover .profile__image-edit {
+  opacity: 1;
 }
 
 .profile__add-button {
@@ -77,6 +100,8 @@
 .profile__edit-button:hover {
   opacity: 0.6;
 }
+
+
 
 @media screen and (max-width: 959px) {
   .profile__info {

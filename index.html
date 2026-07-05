@@ -18,7 +18,10 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__image-container">
+            <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+            <img class="profile__image-edit"src="./images/profile-edit-icon.svg" alt="Editar avatar" />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
             <button
@@ -37,7 +40,7 @@
         <section class="cards page__section">
           <ul class="cards__list">
             <template id="cards-template" src="" alt="">
-              <li class="card">
+              <li class="card" id="">
                 <img class="card__image" src="" alt="" />
                 <button
                   aria-label="Excluir cartão"
@@ -146,6 +149,43 @@
           <img alt="" class="popup__image" src="#" />
           <p class="popup__caption"></p>
         </div>
+      </div>
+      <div class="popup" id="confirm-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+        <h3 class="popup__title">Tem certeza?</h3>
+         <button class="button popup__button" type="button">
+          Sim
+         </button>
+         </div>
+      </div>
+      <div class="popup" id="update_avatar-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+        <h3 class="popup__title">Alterar a foto do perfil</h3>
+         <form class="popup__form" id="update-avatar-form">
+        <input
+              class="popup__input popup__input_type_url"
+              name="link"
+              placeholder="Link de Imagem"
+              required
+              type="url"
+              required
+            />
+            <span id="input-link-error" class="popup__error-message"></span>
+         <button class="button popup__button" type="submit" disabled>
+          Salvar
+         </button>
+         </form>
+         </div>
       </div>
     </div>
     <script type="module" src="./page/index.js" defer></script>
