@@ -25,6 +25,7 @@ export class PopupWithForm extends Popup {
             if(evt.key === "Enter" && this._submitButton.disabled === false){
                 this._handleSubmit(evt);
             }
+            
         })
         this._popupSelector.addEventListener("submit", this._submitListener);
     }

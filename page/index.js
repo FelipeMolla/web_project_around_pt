@@ -163,7 +163,7 @@ const handleTrashClick = (card) =>{
   confirmPopup.setCard(card);
 }
 
-const updateAvatarPopup = new PopupWithForm(`#${updateAvatarModal.id}`, (evt)=> handleUpdateAvatarSubmit(evt, avatarLinkInput))
+const updateAvatarPopup = new PopupWithForm(`#${updateAvatarModal.id}`, (evt)=> handleUpdateAvatarSubmit(evt, avatarLinkInput), updateAvatarSubmitButton);
 profileImage.addEventListener("click",() => {
   const fillAvatarSrc = () =>{
     avatarLinkInput.value = profileImage.src;
@@ -173,13 +173,13 @@ profileImage.addEventListener("click",() => {
   updateAvatarPopup.open();
 });
 
-const newCardPopup = new PopupWithForm(`#${newCardModal.id}`, (evt) => handleCardFormSubmit(evt, newCardNameInput, newCardLinkInput, newCardModal, cardsContainer));
+const newCardPopup = new PopupWithForm(`#${newCardModal.id}`, (evt) => handleCardFormSubmit(evt, newCardNameInput, newCardLinkInput, newCardModal, cardsContainer), newCardSubmitButton);
   newCardOpenBtn.addEventListener("click", () => {
   newCardFormValidator.resetValidation();
   newCardPopup.open();
 });
 
-const newProfileEditPopup = new PopupWithForm(`#${profileEditModal.id}`, (evt)=> handleProfileFormSubmit(evt, profileName, profileDescription, profileEditNameInput, profileEditDescriptionInput));
+const newProfileEditPopup = new PopupWithForm(`#${profileEditModal.id}`, (evt)=> handleProfileFormSubmit(evt, profileName, profileDescription, profileEditNameInput, profileEditDescriptionInput), profileEditSubmitBtn);
 profileEditBtn.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   const fillProfileForm = (evt)=>{
