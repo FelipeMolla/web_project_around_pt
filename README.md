@@ -1,6 +1,8 @@
 # Tripleten web_project_around_pt
 
-Este projeto traz interação e funcionalidades para a página, com o uso de JavaScript.
-Com manipulação de eventos DOM, começando pelo pop-up de edição de perfil e agora estendendo para edição de perfil adicionando e removendo fotos, validação de formulários manipulação de eventos com "click" e "keydown".
+https://felipemolla.github.io/web_project_around_pt/
+
+Projeto traz uma rede social com armazenamento de dados na API da TripleTen.
+Projeto possui métodos simples de edição de perfil, adição e remoção de cartões. Agora podendo fazer alteração da imagem de avatar também.
 
 JavaScript, HTML e CSS.
