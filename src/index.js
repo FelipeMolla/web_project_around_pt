@@ -43,8 +43,8 @@ const profileImage = document.querySelector(".profile__image");
 
 const api = new Api({baseUrl:`https://around-api.pt-br.tripleten-services.com/v1`, 
   headers: {
-    authorization: "",
-    "Content-Type": ""  }}
+    authorization: "e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
+    "Content-Type": "application/json"  }}
 );
 
 const handleCardFormSubmit = (evt) => {
@@ -56,8 +56,7 @@ const handleCardFormSubmit = (evt) => {
     loadSubmitButton(newCardSubmitButton, "Criando...");
     api.newCard({cardName: cardData.name, cardLink: cardData.link}).then((res) => {
     const card = new Card(res, "#cards-template", handleCardClick, handleTrashClick, handleLikeClick);
-    cardsContainer.append(card.generateCard());
-    }).then((res) => {
+      cardSection.addItem(card.generateCard())
       newCardPopup.close();
       loadSubmitButton(newCardSubmitButton, "Criar");
     }).catch((err)=>{
@@ -66,13 +65,13 @@ const handleCardFormSubmit = (evt) => {
   };
         
 const userInfo =  new UserInfo({nameSelector: profileName, aboutSelector:profileDescription, avatarSelector:avatarSelector});
-
+let cardSection;
 api.loadInitialData().then((res) => {
   userInfo.setUserInfo(res[0]);
-  const cardSection = new Section({items: res[1], renderer: (item) => {
+  cardSection = new Section({items: res[1], renderer: (item) => {
   const card = new Card(item, "#cards-template", handleCardClick, handleTrashClick, handleLikeClick);
   const cardElement = card.generateCard();
-  cardSection.addItem(cardElement);
+  cardSection.addInitialItems(cardElement);
 }
 }, ".cards__list");
 return cardSection.renderItems();
@@ -86,7 +85,6 @@ return cardSection.renderItems();
     loadSubmitButton(profileEditSubmitBtn, "Salvando...");
     api.updateUserInfo(profileEditNameInput.value, profileEditDescriptionInput.value).then((res) =>{
       userInfo.setUserInfo(res)
-    }).then((res) =>{
       newProfileEditPopup.close();
       loadSubmitButton(profileEditSubmitBtn, "Salvar");
     }).catch((err) =>{
@@ -100,7 +98,6 @@ return cardSection.renderItems();
     loadSubmitButton(updateAvatarSubmitButton, "Salvando...");
     api.updateAvatar(avatarLinkInput.value).then((res) => {
       userInfo.setUserInfo(res)
-    }).then((res) =>{
       updateAvatarPopup.close();
       loadSubmitButton(updateAvatarSubmitButton, "Salvar");
     }).catch((err) =>{
@@ -130,31 +127,31 @@ const popupWithImage = new PopupWithImage("#image-popup");
 function handleCardClick(link, name){
   popupWithImage.open(link, name);
 };
-const handleOpenEditModal = (evt) => {
-    fillProfileForm();
-  };
- 
+
 const handleDeleteCard = (card) => {
   loadSubmitButton(confirmYesButton, "Excluindo...");
   api.deleteCard(card.id).then((res)=>{
     confirmPopup.close();
+    card.remove();
     loadSubmitButton(confirmYesButton, "Sim");
   }).catch((err) => {
     loadSubmitButton(confirmYesButton, err.message);
   })
-  card.remove();
   }
 
 const confirmPopup = new PopupWithConfirmation(`#${confirmModal.id}`, confirmYesButton, handleDeleteCard, );
 
 const handleLikeClick = (card) =>{
   const cardLikeButton = card.querySelector(".card__like-button");
+
   if(cardLikeButton.classList.contains("card__like-button_is-active")){
-  cardLikeButton.classList.remove("card__like-button_is-active");
-  return api.removeLike(card.id);
+  return api.removeLike(card.id)
+  .then(cardLikeButton.classList.remove("card__like-button_is-active"))
+  .catch((err) => Promise.reject(`Error ${err.status}`));
 } else {
-  cardLikeButton.classList.add("card__like-button_is-active");
-  return api.putLike(card.id);
+  return api.putLike(card.id)
+  .then(cardLikeButton.classList.add("card__like-button_is-active"))
+  .catch((err) => Promise.reject(`Error ${err.status}`));;
 }
 }
 
@@ -173,13 +170,13 @@ profileImage.addEventListener("click",() => {
   updateAvatarPopup.open();
 });
 
-const newCardPopup = new PopupWithForm(`#${newCardModal.id}`, (evt) => handleCardFormSubmit(evt, newCardNameInput, newCardLinkInput, newCardModal, cardsContainer), newCardSubmitButton);
+const newCardPopup = new PopupWithForm(`#${newCardModal.id}`, (evt) => handleCardFormSubmit(evt), newCardSubmitButton);
   newCardOpenBtn.addEventListener("click", () => {
   newCardFormValidator.resetValidation();
   newCardPopup.open();
 });
 
-const newProfileEditPopup = new PopupWithForm(`#${profileEditModal.id}`, (evt)=> handleProfileFormSubmit(evt, profileName, profileDescription, profileEditNameInput, profileEditDescriptionInput), profileEditSubmitBtn);
+const newProfileEditPopup = new PopupWithForm(`#${profileEditModal.id}`, (evt)=> handleProfileFormSubmit(evt), profileEditSubmitBtn);
 profileEditBtn.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   const fillProfileForm = (evt)=>{

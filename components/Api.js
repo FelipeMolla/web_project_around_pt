@@ -1,154 +1,89 @@
 export class Api {
     constructor(options){
-        this._baseUrl = options;
-        this._headers = options;
+        this._baseUrl = options.baseUrl;
+        this._headers = options.headers;
+    }
+    _handleApiResponse(res){
+        return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
     }
     getInitialCards(){
-        return fetch("https://around-api.pt-br.tripleten-services.com/v1/cards/", 
+        return fetch(`${this._baseUrl}/cards/`, 
             {
-            headers: {
-                authorization: "e61c6696-d0b3-4bf9-8d70-f2eda4e25e18"
-                  } 
+            headers: this._headers,
         })
-        .then((res) => {
-            if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-        })     
-        .catch((err) => {
-            return Promise.reject(`Error: ${err}`) 
-        })
+        .then(this._handleApiResponse)
     }
     getUserInfo(){
-        return fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me",
+        return fetch(`${this._baseUrl}/users/me`,
                 {
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                    }
+                    headers: this._headers
                 }
-        ).then((res) => {
-            if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-        })
+        ).then(this._handleApiResponse)
         }
     updateUserInfo(newName, newAbout){
-        return fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me",
+        return fetch(`${this._baseUrl}/users/me`,
                 {
                     method: 'PATCH',
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    },
+                    headers: this._headers,
                     body: JSON.stringify({
                         name: `${newName}`,
                         about: `${newAbout}`,
                     })
                 }
-            ).then((res) => {
-            if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-        })
+            ).then(this._handleApiResponse)
     }
     updateAvatar(newAvatar){
-        return fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me/avatar",
+        return fetch(`${this._baseUrl}/users/me/avatar`,
             {
                 method: 'PATCH',
-                headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    },
+                headers:this._headers ,
                     body: JSON.stringify({
                         avatar: `${newAvatar}`
                     })
             }
-        ).then((res) => {
-            if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-        })
+        ).then(this._handleApiResponse)
     }
     newCard({cardName, cardLink}){
-        return fetch("https://around-api.pt-br.tripleten-services.com/v1/cards",
+        return fetch(`${this._baseUrl}/cards`,
                 {
                     method:'POST',
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    },
+                    headers:this._headers,
                     body: JSON.stringify({
                         name: cardName,
                         link: cardLink,
                     })
-                }).then((res) => {
-            if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-        })
+                }).then(this._handleApiResponse)
     }
 
     deleteCard(cardId){
-        return fetch(`https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}`,
+        return fetch(`${this._baseUrl}/cards/${cardId}`,
                 {
                     method:'DELETE',
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    }
-                }).then((res) => {
-                    if(res.ok){
-             return res.json()
-            } else {
-             return Promise.reject(`Error: ${res.status}`)    
-            }
-                })
+                    headers:this._headers 
+                }).then(this._handleApiResponse)
     }
     putLike(cardId){
-        return fetch(`https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}/likes`,
+        return fetch(`${this._baseUrl}/cards/${cardId}/likes`,
                 {
                     method:'PUT',
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    },
+                    headers:this._headers,
                     body: JSON.stringify({
                         isLiked: true
                     })
-                }).then((res) =>{
-                    if(res.ok){
-                    return res.json()
-                    } else {
-                    return Promise.reject(`Error: ${res.status}`)    
-                    }
-                })
+                }).then(this._handleApiResponse)
     }
     removeLike(cardId){
-        return fetch(`https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}/likes`,
+        return fetch(`${this._baseUrl}/cards/${cardId}/likes`,
                 {
                     method:'DELETE',
-                    headers:{
-                        authorization:"e61c6696-d0b3-4bf9-8d70-f2eda4e25e18",
-                        "Content-Type": "application/json",
-                    }
-                })
+                    headers:this._headers
+                }).then(this._handleApiResponse)
     }
     loadInitialData(){
     return Promise.all([this.getUserInfo(), this.getInitialCards()]).then((res)=>{
         return res;
-    })
+     })
     }
     
-
     }
 
